@@ -1,5 +1,4 @@
 import serial
-import serial.rs485
 import argparse
 from redundancy import checksum_calc
 
@@ -8,7 +7,7 @@ parser.add_argument('--cmd',type=int, default = 2)
 parser.add_argument('--subcmd',type=int, default = 3)
 #parser.add_argument('--length',type=int, default = 5)
 parser.add_argument('--ident',type=int, default = 1)
-parser.add_argument('--data', type=bytearray, default = b'')
+parser.add_argument('--data', nargs='+', default = [])
 
 parser.add_argument('--port',type=str, default = 'COM1')
 parser.add_argument('--answer-length',type=int, default = 61)

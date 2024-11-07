@@ -6,9 +6,9 @@ from redundancy import modbusCrc
 parser = argparse.ArgumentParser(allow_abbrev=True)
 parser.add_argument('--sfd',type=int, default = 1)
 #parser.add_argument('--tgm',type=int, default = 3)
-parser.add_argument('--cmd',type=int, default = 5)
-parser.add_argument('--info',type=int, default = 1)
-parser.add_argument('--data', type=bytearray, default = b'')
+parser.add_argument('--cmd',type=int, default = 1)
+parser.add_argument('--info',type=int, default = 16)
+parser.add_argument('--data', nargs='+', default = b'\x02\x03\x05\x01\x05') #von ASD TELEGRAM
 
 parser.add_argument('--port',type=str, default = 'COM1')
 parser.add_argument('--answer-length',type=int, default = 134)
@@ -22,7 +22,7 @@ request = bytearray([args.sfd, tgm, args.cmd, args.info])
 for i in args.data:
     request.append(int(i))
     
-crcl, crch = modbusCrc(bytes.fromhex("0104080000000900000000"))
+crcl, crch = modbusCrc(request)
 
 request.append(crcl)
 request.append(crch)
